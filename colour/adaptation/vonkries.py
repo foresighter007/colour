@@ -61,12 +61,23 @@ def chromatic_adaptation_matrix_VonKries(XYZ_w, XYZ_wr, transform='CAT02'):
     Returns
     -------
     ndarray
-        Chromatic adaptation matrix.
+        Chromatic adaptation matrix :math:`M_{cat}`.
 
     Raises
     ------
     KeyError
         If chromatic adaptation method is not defined.
+
+    Notes
+    -----
+
+    +------------+-----------------------+---------------+
+    | **Domain** | **Scale - Reference** | **Scale - 1** |
+    +============+=======================+===============+
+    | ``XYZ_w``  | [0, 1]                | [0, 1]        |
+    +------------+-----------------------+---------------+
+    | ``XYZ_wr`` | [0, 1]                | [0, 1]        |
+    +------------+-----------------------+---------------+
 
     References
     ----------
@@ -112,10 +123,10 @@ def chromatic_adaptation_matrix_VonKries(XYZ_w, XYZ_wr, transform='CAT02'):
 
     D = row_as_diagonal(D)
 
-    cat = dot_matrix(np.linalg.inv(M), D)
-    cat = dot_matrix(cat, M)
+    M_cat = dot_matrix(np.linalg.inv(M), D)
+    M_cat = dot_matrix(M_cat, M)
 
-    return cat
+    return M_cat
 
 
 def chromatic_adaptation_VonKries(XYZ, XYZ_w, XYZ_wr, transform='CAT02'):
@@ -141,6 +152,25 @@ def chromatic_adaptation_VonKries(XYZ, XYZ_w, XYZ_wr, transform='CAT02'):
     -------
     ndarray
         *CIE XYZ_c* tristimulus values of the stimulus corresponding colour.
+
+    Notes
+    -----
+
+    +------------+-----------------------+---------------+
+    | **Domain** | **Scale - Reference** | **Scale - 1** |
+    +============+=======================+===============+
+    | ``XYZ``    | [0, 1]                | [0, 1]        |
+    +------------+-----------------------+---------------+
+    | ``XYZ_n``  | [0, 1]                | [0, 1]        |
+    +------------+-----------------------+---------------+
+    | ``XYZ_r``  | [0, 1]                | [0, 1]        |
+    +------------+-----------------------+---------------+
+
+    +------------+-----------------------+---------------+
+    | **Range**  | **Scale - Reference** | **Scale - 1** |
+    +============+=======================+===============+
+    | ``XYZ_c``  | [0, 1]                | [0, 1]        |
+    +------------+-----------------------+---------------+
 
     References
     ----------
